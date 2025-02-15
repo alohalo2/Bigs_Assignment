@@ -1,0 +1,48 @@
+/* 기본 Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out; /* ✨ 부드러운 전환 효과 */
+}
+
+/* HTML, body 기본 스타일 */
+html,
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    transition: background-color 0.3s ease-in-out; /* ✨ 부드러운 배경 변경 */
+}
+
+/* MUI 입력 필드 (TextField) */
+.MuiOutlinedInput-root {
+    border-radius: 8px;
+    transition: border-radius 0.3s ease-in-out; /* ✨ 둥근 모서리 변경 부드럽게 */
+}
+
+/* MUI 카드(Paper) */
+.MuiPaper-root {
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out; /* ✨ 카드 크기 및 그림자 부드럽게 */
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    html,
+    body {
+        font-size: 14px;
+    }
+
+    .MuiContainer-root {
+        padding: 0 16px !important;
+    }
+
+    .MuiPaper-root {
+        border-radius: 8px; /* 모바일에서 조금 더 둥글게 */
+    }
+}

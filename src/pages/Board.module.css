@@ -1,0 +1,17 @@
+.textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    outline: none;
+    resize: none;
+}
+
+.boardContainer {
+    margin:auto;
+    width: 60%;
+}
