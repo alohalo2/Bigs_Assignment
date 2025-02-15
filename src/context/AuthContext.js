@@ -24,15 +24,8 @@ export const AuthProvider = ({ children }) => {
             setUser({ username: decodedToken.username, name: decodedToken.name });
         } catch (error) {
             console.error('refreshToken 갱신 실패:', error.response?.data || error.message);
-            // logout(); // refreshToken도 만료되었을 가능성이 있으므로 로그아웃 처리
         }
     };
-
-    // const logout = () => {
-    //     setAccessToken(null);
-    //     setUser(null);
-    //     sessionStorage.removeItem('refreshToken'); // refreshToken 삭제
-    // };
 
     useEffect(() => {
         refreshAccessToken(); // 새로고침 시 자동으로 accessToken 재발급
