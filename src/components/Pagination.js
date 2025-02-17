@@ -15,6 +15,9 @@ const Pagination = ({ page, totalPages }) => {
         }
     };
 
+    // 게시물이 없거나 페이지가 1개 이하라면 페이지네이션을 숨김
+    if (totalPages <= 1) return null;
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, marginTop: 2 }}>
             <Button onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
