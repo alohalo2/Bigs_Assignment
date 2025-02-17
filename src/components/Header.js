@@ -25,7 +25,7 @@ const Header = () => {
                         <Typography variant="body1" sx={{ cursor: 'default' }}>
                             {`${user.username}  ${user.name}님`}
                         </Typography>
-                        <Button color="inherit" onClick={handleLogout}>
+                        <Button variant='contained' color="primary" onClick={handleLogout}>
                             로그아웃
                         </Button>
                     </Box>

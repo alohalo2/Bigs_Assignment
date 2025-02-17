@@ -11,6 +11,11 @@ export const AuthProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
+    const setNewAccessToken = (newToken) => {
+        setAccessToken(newToken); // React 상태 업데이트 (렌더링 트리거)
+        setTokenServiceAccessToken(newToken); // tokenService에도 저장
+    };
+
     const refreshAccessToken = async () => {
         const storedRefreshToken = sessionStorage.getItem('refreshToken');
         if (!storedRefreshToken) {
@@ -21,9 +26,7 @@ export const AuthProvider = ({ children }) => {
         }
         try {
             const data = await refreshToken();
-            setAccessToken(data.accessToken);
-            // React 상태 업데이트와 함께 tokenService에도 저장
-            setTokenServiceAccessToken(data.accessToken);
+            setNewAccessToken(data.accessToken);
             sessionStorage.setItem('refreshToken', data.refreshToken);
             const decodedToken = jwtDecode(data.accessToken);
             setUser({ username: decodedToken.username, name: decodedToken.name });

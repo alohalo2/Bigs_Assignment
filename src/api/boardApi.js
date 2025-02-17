@@ -42,22 +42,25 @@ export const getBoardPost = async (token, postId) => {
     }
 };
 
-export const submitBoardPost = async (token, postData, file = null) => {
+// 게시글 등록
+export const submitBoardPost = async (token, postData, files = []) => {
     try {
         const formData = new FormData();
 
-        // 서버가 'request' 필드 안에 JSON 데이터를 감싸서 보내길 원함
+        console.log(postData.boardCategory);
+
         const requestPayload = {
             title: postData.title,
             content: postData.content,
-            category: postData.category,
+            category: postData.boardCategory,
         };
 
         formData.append('request', new Blob([JSON.stringify(requestPayload)], { type: 'application/json' }));
 
-        // 파일이 있으면 추가
-        if (file) {
-            formData.append('file', file);
+        if (files.length > 0) {
+            files.forEach((file) => {
+                formData.append('files', file);
+            });
         }
 
         const response = await axiosInstance.post('/boards', formData, {
@@ -69,38 +72,40 @@ export const submitBoardPost = async (token, postData, file = null) => {
 
         return response.data;
     } catch (error) {
+        console.error('게시글 작성 실패:', error.response?.data || error.message);
         throw error;
     }
 };
 
 // 게시글 수정
-export const updateBoardPost = async (token, postId, postData, file = null) => {
+export const updateBoardPost = async (token, postId, postData, newFiles = []) => {
     try {
         const formData = new FormData();
 
-        // 서버에서 `request` 필드 안에 JSON 데이터가 필요함
         const requestPayload = {
             title: postData.title,
             content: postData.content,
-            category: postData.category,
+            category: postData.boardCategory,
         };
 
         formData.append('request', new Blob([JSON.stringify(requestPayload)], { type: 'application/json' }));
 
-        // 파일이 있을 경우 추가
-        if (file) {
-            formData.append('file', file);
+        if (newFiles.length > 0) {
+            newFiles.forEach((file) => {
+                formData.append('files', file);
+            });
         }
 
         const response = await axiosInstance.patch(`/boards/${postId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data', // FormData를 사용할 경우 자동으로 설정됨
+                'Content-Type': 'multipart/form-data',
             },
         });
 
         return response.data;
     } catch (error) {
+        console.error('게시글 수정 실패:', error.response?.data || error.message);
         throw error;
     }
 };

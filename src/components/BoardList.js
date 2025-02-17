@@ -20,15 +20,15 @@ const BoardList = ({ posts, navigate, categories}) => {
         }
     };
 
-    const handleEdit = (post, event) => {
-        event.stopPropagation();
-        // 수정 시에도 categories 데이터를 함께 전달
-        navigate(`/board/edit/${post.id}`, { state: { categories } });
-    };
+    // const handleEdit = (post, event) => {
+    //     event.stopPropagation();
+    //     // 수정 시에도 categories 데이터를 함께 전달
+    //     navigate(`/board/edit/${post.id}`, { state: { categories } });
+    // };
 
     const handleView = (post) => {
         // 현재 location을 background로 전달하여 모달 오버레이 구현
-        navigate(`/board/view/${post.id}`, { state: { background: location } });
+        navigate(`/board/view/${post.id}`, { state: { background: location, categories } });
     };
 
     return (
@@ -44,9 +44,9 @@ const BoardList = ({ posts, navigate, categories}) => {
                             <Button color="error" onClick={(e) => handleDelete(post.id, e)}>
                                 삭제
                             </Button>
-                            <Button color="primary" onClick={(e) => handleEdit(post, e)}>
+                            {/* <Button color="primary" onClick={(e) => handleEdit(post, e)}>
                                 수정
-                            </Button>
+                            </Button> */}
                         </Box>
                     </ListItemButton>
                 </ListItem>

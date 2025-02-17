@@ -19,7 +19,7 @@ const CategoryTabs = ({ categories, selectedCategory }) => {
             variant="scrollable"
             scrollButtons="auto"
             sx={{
-                backgroundColor: '#f5f5f5',
+                backgroundColor: '#fff',
                 '& .MuiTabs-indicator': { display: 'none' },
                 '& .MuiTab-root': {
                     textTransform: 'none',
@@ -27,7 +27,7 @@ const CategoryTabs = ({ categories, selectedCategory }) => {
                     color: '#555',
                 },
                 '& .Mui-selected': {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f0f0f0',
                     borderRadius: '8px',
                     fontWeight: 'bold',
                     color: '#000',

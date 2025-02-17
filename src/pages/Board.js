@@ -51,7 +51,7 @@ const Board = () => {
                 let filteredPosts = postsData.content || [];
                 // 카테고리 필터 적용 (검색어가 없을 때만)
                 if (selectedCategory !== 'ALL' && query === '') {
-                    filteredPosts = filteredPosts.filter((post) => post.category === selectedCategory);
+                    filteredPosts = filteredPosts.filter((post) => post.boardCategory === selectedCategory);
                 }
                 // 검색어 필터 적용 (제목에 포함)
                 if (query) {
@@ -78,9 +78,21 @@ const Board = () => {
                 게시판
             </Typography>
             <BoardSearch />
-            <Paper sx={{ padding: 2, marginBottom: 2 }}>
-                {/* 검색어가 없을 때만 카테고리 탭 표시 */}
-                {query === '' && <CategoryTabs categories={categories} selectedCategory={selectedCategory} />}
+            {/* 카테고리 탭과 리스트를 하나의 Paper로 묶어서 자연스럽게 연결 */}
+            <Paper
+                sx={{
+                    padding: 2,
+                    marginBottom: 2,
+                    backgroundColor: '#fff',
+                    borderRadius: '10px',
+                    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+                }}
+            >
+                {query === '' && (
+                    <Box sx={{ marginBottom: 2, borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
+                        <CategoryTabs categories={categories} selectedCategory={selectedCategory} />
+                    </Box>
+                )}
                 <BoardList posts={posts} navigate={navigate} categories={categories} />
                 <Pagination page={page} totalPages={totalPages} />
             </Paper>
@@ -95,7 +107,7 @@ const Board = () => {
                 </Button>
             </Box>
             {/* 게시글 상세보기 모달 (URL 기반 상세보기 페이지도 가능) */}
-            {selectedPost && <BoardPost post={selectedPost} setSelectedPost={setSelectedPost} />}
+            {selectedPost && <BoardPost post={selectedPost} setSelectedPost={setSelectedPost} categories={categories} />}
         </div>
     );
 };

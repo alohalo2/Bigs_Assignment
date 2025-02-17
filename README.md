@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# 게시판 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 개요
 
-## Available Scripts
+    React + Material-UI 기반의 JWT 인증 게시판 애플리케이션  
+    액세스 토큰은 메모리, 리프레시 토큰은 세션 스토리지에서 관리하여 보안성을 높임.
 
-In the project directory, you can run:
+## 주요 동작 방식
 
-### `npm start`
+### 1. 인증 및 토큰 관리
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    로그인 성공 시
+     - 액세스 토큰 → 메모리에 저장
+     - 리프레시 토큰 → 세션 스토리지에 저장
+     - 사용자 정보는 JWT 디코딩 후 상태에 저장
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    요청 시
+     - axiosInstance를 통해 모든 API 요청에 액세스 토큰 자동 포함
 
-### `npm test`
+    액세스 토큰이 만료 시
+     - 리프레시 토큰을 사용해 자동 갱신
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. 회원가입 및 로그인
 
-### `npm run build`
+    회원가입
+    - 아이디(이메일), 사용자명, 비밀번호, 비밀번호 확인을 입력 후 가입
+    - 서버에서 검증 후 계정 생성
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    로그인
+     - 아이디, 비밀번호 검증 후 일치하면 로그인
+     - 검증 실패 시 아이디, 비밀번호 재 확인 요청 경고 문구 표출
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    로그아웃
+     - 메모리에서 액세스 토큰 제거
+     - 세션 스토리지에서 리프레시 토큰 제거
+     - 사용자 상태 초기화 후 로그인 페이지로 이동
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. 게시판 기능 흐름
 
-### `npm run eject`
+    게시글 목록
+     - 로그인 후 게시판 페이지에서 게시글 목록을 불러옴
+     - 카테고리 선택 및 검색 가능
+     - 페이지네이션 적용
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    게시글 작성
+     - 제목, 내용 입력 후 게시글 작성 가능
+     - 이미지 업로드 시 미리보기 제공
+     - 미리보기 이미지에 삭제 버튼 제공
+     - multipart/form-data 형식으로 서버에 전송
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    게시글 수정
+     - 기존 게시글을 불러오면서 기존 이미지 유지
+     - 수정 완료 후 게시글 목록으로 이동
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    게시글 삭제
+     - 삭제 버튼 클릭 시 서버에서 해당 게시글 제거
+     - 삭제 후 자동으로 목록 갱신
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 4. 게시글 상세 보기 & 모달 동작
 
-## Learn More
+     - 게시글 클릭 시 모달 형태로 상세 보기 지원
+     - 상세 보기에서 "수정" 버튼 클릭 시 수정 페이지로 이동
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
